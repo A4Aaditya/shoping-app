@@ -11,6 +11,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthLoginEvent>(_login);
     on<AuthSignupEvent>(_signup);
     on<AuthLogoutEvent>(_logout);
+    on<GoogleLoginEvent>(_googleLogin);
   }
 
   FutureOr<void> _login(AuthLoginEvent event, Emitter<AuthState> emit) async {
@@ -58,6 +59,18 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthInitialState());
     } catch (message) {
       log(message.toString());
+      emit(AuthErrorState(message: message.toString()));
+    }
+  }
+
+  FutureOr<void> _googleLogin(
+      GoogleLoginEvent event, Emitter<AuthState> emit) async {
+    try {
+      final user = await UserRepository().loginWithGoogle();
+      if (user != null) {
+        emit(AuthSuccessState());
+      }
+    } catch (message) {
       emit(AuthErrorState(message: message.toString()));
     }
   }

@@ -20,3 +20,5 @@ class AuthSignupEvent extends AuthEvent {
 }
 
 class AuthLogoutEvent extends AuthEvent {}
+
+class GoogleLoginEvent extends AuthEvent {}

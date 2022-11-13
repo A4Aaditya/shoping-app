@@ -34,10 +34,12 @@ class UserRepository {
     try {
       final auth = await _instance.signInWithProvider(provider);
       return auth.user;
+    } on FirebaseException catch (e) {
+      throw e.message!;
     } catch (message) {
       log(message.toString());
+      rethrow;
     }
-    return null;
   }
 
   Future<void> logout() async {

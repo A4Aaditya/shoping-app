@@ -131,7 +131,9 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  void loginWithGooglePressed() async {}
+  void loginWithGooglePressed() async {
+    BlocProvider.of<AuthBloc>(context).add(GoogleLoginEvent());
+  }
 
   void toggleObscure() {
     setState(() {
