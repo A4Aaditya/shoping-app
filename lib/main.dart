@@ -1,10 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shopping_app/src/app/features/authentication/bloc/auth_bloc.dart';
 import 'package:shopping_app/src/app/features/authentication/bloc/auth_state.dart';
-import 'package:shopping_app/src/app/features/authentication/repository/user_repository.dart';
 import 'package:shopping_app/src/app/features/authentication/views/login_screen.dart';
+import 'package:shopping_app/src/app/features/home/home_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -31,7 +32,9 @@ class MyApp extends StatelessWidget {
           ),
           home: BlocBuilder<AuthBloc, AuthState>(
             builder: (context, state) {
-              return const LoginScreen();
+              return FirebaseAuth.instance.currentUser != null
+                  ? const HomeScreen()
+                  : const LoginScreen();
             },
           )),
     );
